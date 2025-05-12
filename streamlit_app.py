@@ -1,9 +1,3 @@
-import streamlit as st
-
-st.title("🎈 Identifikasi Jenis Plastik Pada Kode Resin")
-st.write(
-import streamlit as st
-
 # Sidebar navigasi
 menu = st.sidebar.radio("Navigasi", ["Beranda", "Informasi", "Identifikasi Resin (RIC)"])
 
