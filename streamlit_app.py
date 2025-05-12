@@ -2,9 +2,43 @@ import streamlit as st
 
 st.title("🎈 Identifikasi Jenis Plastik Pada Kode Resin")
 st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
 import streamlit as st
+
+# Sidebar navigasi
+menu = st.sidebar.radio("Navigasi", ["Beranda", "Informasi", "Identifikasi Resin (RIC)"])
+
+# Halaman Beranda
+if menu == "Beranda":
+    st.title("Selamat Datang di Aplikasi Identifikasi Resin")
+    st.write("""
+    Aplikasi ini membantu Anda mengenali jenis plastik berdasarkan kode RIC (Resin Identification Code).
+    Pilih menu di sebelah kiri untuk mulai.
+    """)
+
+# Halaman Informasi
+elif menu == "Informasi":
+    st.title("Tentang Resin Identification Code (RIC)")
+    st.write("""
+    **Resin Identification Code (RIC)** adalah sistem pengkodean numerik dari 1 sampai 7
+    yang digunakan untuk mengidentifikasi jenis plastik atau resin dalam produk.
+
+    Kode ini biasanya ditemukan pada kemasan plastik, berbentuk segitiga panah dengan angka di dalamnya.
+    """)
+
+# Halaman Identifikasi Resin
+elif menu == "Identifikasi Resin (RIC)":
+    st.title("Identifikasi Resin Berdasarkan Kode (RIC)")
+
+    ric_code = st.selectbox("Pilih Kode Resin (1-7)", [1, 2, 3, 4, 5, 6, 7])
+
+    resin_info = {
+        1: ("PET (Polyethylene Terephthalate)", "Botol air mineral, botol minuman ringan."),
+        2: ("HDPE (High-Density Polyethylene)", "Botol susu, wadah sabun, galon kecil."),
+        3: ("PVC (Polyvinyl Chloride)", "Pipa air, pembungkus kabel, kemasan minyak."),
+        4: ("LDPE (Low-Density Polyethylene)", "Kantong belanja, bungkus makanan."),
+        5: ("PP (Polypropylene)", "Wadah makanan, tutup botol, sedotan."),
+        6: ("PS (Polystyrene)", "
+
 from PIL import Image
 import numpy as np
 # Jika Anda menggunakan model machine learning (misalnya TensorFlow/Keras)
@@ -126,41 +160,6 @@ if uploaded_file is not None:
 else:
     st.info("Silakan unggah gambar kode plastik untuk memulai identifikasi.")
 import streamlit as st
-
-# Sidebar navigasi
-menu = st.sidebar.radio("Navigasi", ["Beranda", "Informasi", "Identifikasi Resin (RIC)"])
-
-# Halaman Beranda
-if menu == "Beranda":
-    st.title("Selamat Datang di Aplikasi Identifikasi Resin")
-    st.write("""
-    Aplikasi ini membantu Anda mengenali jenis plastik berdasarkan kode RIC (Resin Identification Code).
-    Pilih menu di sebelah kiri untuk mulai.
-    """)
-
-# Halaman Informasi
-elif menu == "Informasi":
-    st.title("Tentang Resin Identification Code (RIC)")
-    st.write("""
-    **Resin Identification Code (RIC)** adalah sistem pengkodean numerik dari 1 sampai 7
-    yang digunakan untuk mengidentifikasi jenis plastik atau resin dalam produk.
-
-    Kode ini biasanya ditemukan pada kemasan plastik, berbentuk segitiga panah dengan angka di dalamnya.
-    """)
-
-# Halaman Identifikasi Resin
-elif menu == "Identifikasi Resin (RIC)":
-    st.title("Identifikasi Resin Berdasarkan Kode (RIC)")
-
-    ric_code = st.selectbox("Pilih Kode Resin (1-7)", [1, 2, 3, 4, 5, 6, 7])
-
-    resin_info = {
-        1: ("PET (Polyethylene Terephthalate)", "Botol air mineral, botol minuman ringan."),
-        2: ("HDPE (High-Density Polyethylene)", "Botol susu, wadah sabun, galon kecil."),
-        3: ("PVC (Polyvinyl Chloride)", "Pipa air, pembungkus kabel, kemasan minyak."),
-        4: ("LDPE (Low-Density Polyethylene)", "Kantong belanja, bungkus makanan."),
-        5: ("PP (Polypropylene)", "Wadah makanan, tutup botol, sedotan."),
-        6: ("PS (Polystyrene)", "
 
 # Footer
 st.markdown("---")
