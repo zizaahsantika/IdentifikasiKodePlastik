@@ -2,24 +2,40 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 
+from streamlit_lottie import st_lottie
 import requests
 
-url = "URL_FILE_JSON_YANG_INGIN_DIUNDUH"
-nama_file = "data.json"
+# Fungsi untuk mengambil animasi dari URL
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
 
-try:
-    response = requests.get(url)
-    response.raise_for_status()  # Akan menimbulkan HTTPError untuk respons yang buruk (4xx atau 5xx)
+# URL Lottie (bisa ganti sesuai preferensi)
+lottie_loading = load_lottieurl("https://assets7.lottiefiles.com/packages/lf20_j1adxtyb.json")  # animasi loading
 
-    with open(nama_file, 'w') as f:
-        f.write(response.text)
+uploaded_file = st.file_uploader("Pilih gambar kode plastik...", type=["jpg", "jpeg", "png"])
 
-    print(f"File JSON berhasil diunduh dan disimpan sebagai {nama_file}")
+if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    st.image(image, caption="Gambar yang Diunggah", use_column_width=True)
 
-except requests.exceptions.RequestException as e:
-    print(f"Terjadi kesalahan saat mengunduh file: {e}")
-except HTTPError as e:
-    print(f"Terjadi kesalahan HTTP: {e}")
+    if st.button("Identifikasi"):
+        with st.spinner("Menganalisis gambar..."):
+            # Tambahkan animasi loading
+            st_lottie(lottie_loading, height=200, key="loading")
+            result = identify_plastic_code(uploaded_file)
+
+        st.subheader("Hasil Identifikasi:")
+        st.write(f"**Kode Plastik:** {result['prediction']}")
+        st.write(f"**Probabilitas:** {result['probability']:.2f}")
+
+        if result["prediction"] in PLASTIC_INFO:
+            st.info(PLASTIC_INFO[result["prediction"]])
+        elif result["prediction"] == "Tidak dapat mengidentifikasi":
+            st.warning("Gambar tidak cukup jelas atau format tidak dikenali.")
+
 # === Data Kode Plastik ===
 CLASS_NAMES = {
     0: "1 (PET atau PETE)",
