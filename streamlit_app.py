@@ -2,6 +2,24 @@ import streamlit as st
 from PIL import Image
 import numpy as np
 
+import requests
+
+url = "URL_FILE_JSON_YANG_INGIN_DIUNDUH"
+nama_file = "data.json"
+
+try:
+    response = requests.get(url)
+    response.raise_for_status()  # Akan menimbulkan HTTPError untuk respons yang buruk (4xx atau 5xx)
+
+    with open(nama_file, 'w') as f:
+        f.write(response.text)
+
+    print(f"File JSON berhasil diunduh dan disimpan sebagai {nama_file}")
+
+except requests.exceptions.RequestException as e:
+    print(f"Terjadi kesalahan saat mengunduh file: {e}")
+except HTTPError as e:
+    print(f"Terjadi kesalahan HTTP: {e}")
 # === Data Kode Plastik ===
 CLASS_NAMES = {
     0: "1 (PET atau PETE)",
